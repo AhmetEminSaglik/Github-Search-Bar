@@ -6,7 +6,6 @@ import java.util.List;
 public class Database {
     static List<String> list = new ArrayList<>();
 
-
     public List<String> getList() {
         if (list.size() == 0) {
             fillList();
@@ -22,6 +21,4 @@ public class Database {
         list.add("Java developer");
         list.add("I scream, you scream, we all scream for ice cream");
     }
-
-
 }
