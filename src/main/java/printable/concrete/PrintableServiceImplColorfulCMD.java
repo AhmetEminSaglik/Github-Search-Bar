@@ -4,6 +4,7 @@ import org.fusesource.jansi.AnsiConsole;
 import printable.abstracts.PrintableService;
 
 import static org.fusesource.jansi.Ansi.Color.GREEN;
+import static org.fusesource.jansi.Ansi.Color.RED;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PrintableServiceImplColorfulCMD implements PrintableService {
@@ -22,6 +23,6 @@ public class PrintableServiceImplColorfulCMD implements PrintableService {
 
     @Override
     public String getColorfulText(String msg) {
-        return ansi().fg(GREEN).a(msg).reset() + "";
+        return ansi().fg(RED).a(msg).reset() + "";
     }
 }
