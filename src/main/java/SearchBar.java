@@ -28,9 +28,9 @@ public class SearchBar {
     }
 
     private void fillSettingOptionList() {
-        settingOptionList.add("Get Colors for IDE");
+        settingOptionList.add("Get Colors for INTELLIJ IDEA");
         settingOptionList.add("Get Colors for CMD");
-        settingOptionList.add("Get Standart Colors");
+        settingOptionList.add("Get Standard Colors");
     }
 
     public void start() {
