@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Github-Search-Bar:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Github_Search_Bar_jar</output-path>
+    <root id="archive" name="Github-Search-Bar.jar">
+      <element id="module-output" name="Github-Search-Bar" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/fusesource/jansi/jansi/2.4.0/jansi-2.4.0.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>

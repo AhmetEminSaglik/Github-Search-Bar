@@ -1,5 +1,7 @@
 package utility;
 
+import printable.abstracts.PrintableService;
+
 import java.util.List;
 
 public class Utility {
@@ -7,20 +9,19 @@ public class Utility {
         System.out.print(text);
     }
 
+    private static PrintableService colorfulPrint = new PrintableConfiguration();
     public static void nextLine() {
         System.out.println();
     }
 
-    public static void printSpecial(int index, String text, String foundItem) {
+    private static void printSpecial(int index, String text, String foundItem) {
         StringBuilder tb = new StringBuilder(text);
         StringBuilder fib = new StringBuilder(foundItem);
         for (int i = 0; i < foundItem.length(); i++) {
-
             if ((index < text.length()) && (Character.toLowerCase(tb.charAt(index)) == Character.toLowerCase(fib.charAt(i)))) {
                 String specialText = String.valueOf(fib.charAt(i));
-                specialText = getRangedTextRequestedColor(specialText, ConsoleColors.GREEN_BOLD_BRIGHT, ConsoleColors.WHITE);
+                specialText = getRangedTextRequestedColor(specialText/*, colorfulPrint.start() GREEN_BOLD_BRIGHT, ConsoleColors.WHITE*/);
                 print(specialText);
-
                 String newFoundItem = fib.substring(i + 1, fib.length());
                 printSpecial(index + 1, text, newFoundItem);
                 return;
@@ -30,8 +31,8 @@ public class Utility {
         }
     }
 
-    public static String getRangedTextRequestedColor(String requestedColorfulText, String requestedColor, String standartTextColor) {
-        return requestedColor + requestedColorfulText + standartTextColor;
+    public static String getRangedTextRequestedColor(String requestedColorfulText/*, String requestedColor, String standartTextColor*/) {
+        return colorfulPrint.getColorfulText(requestedColorfulText);
     }
 
     public static void printResult(String searchText, List<String> foundItems) {
