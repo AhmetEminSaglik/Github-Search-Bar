@@ -15,6 +15,7 @@
         <li><a href="#requirement">5-) Requirements</a></li>
          <li><a href="#quick-start">6-) Quick Start</a></li>
         <li><a href="#installation">7-) Installation</a></li>
+        <li><a href="#docker">8-) Docker</a></li>
         
 </ul>
 
@@ -78,3 +79,16 @@ git clone https://github.com/AhmetEminSaglik/Github-Search-Bar.git
 2-) Open IDE, and open the cloned project.
 
 3-) The project is ready to run.
+
+<h2 id="docker">8-) Docker </h2>
+
+1-) Copy and paste the following command in your cmd.
+<br><br>
+```
+docker run --name github-search-bar -it ahmeteminsaglik/github-search-bar:1.1
+```
+
+Version Difference : 
+* `1.0` : Prints characters in `green` color in CMD.
+* `1.1` : Prints characters in `red` color in CMD.
+
