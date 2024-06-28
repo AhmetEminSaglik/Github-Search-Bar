@@ -11,6 +11,7 @@
 .mtj.tmp/
 
 /out
+
 # Package Files #
 *.war
 *.nar
