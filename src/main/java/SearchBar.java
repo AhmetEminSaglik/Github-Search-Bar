@@ -1,4 +1,5 @@
 import data.Database;
+import utility.PrintableConfiguration;
 import utility.Utility;
 
 import java.util.ArrayList;
@@ -8,30 +9,42 @@ import java.util.Scanner;
 public class SearchBar {
 
     private final Scanner scanner = new Scanner(System.in);
-
     private final Database database = new Database();
     private final List<String> processList = new ArrayList<>();
+    private final List<String> settingOptionList = new ArrayList<>();
 
     public SearchBar() {
         fillProcessList();
+        fillSettingOptionList();
     }
 
     private void fillProcessList() {
         processList.add("Print All Data ");
         processList.add("Add Data ");
-        processList.add("Remove All Data ");
-        processList.add("Remove Single Data ");
         processList.add("Search Data");
-        processList.add("Update Print Settings");
+        processList.add("Remove Single Data ");
+        processList.add("Remove All Data ");
+        processList.add("Update Searching-Printing Settings");
+    }
+
+    private void fillSettingOptionList() {
+        settingOptionList.add("Get Colors for IDE");
+        settingOptionList.add("Get Colors for CMD");
+        settingOptionList.add("Get Standart Colors");
     }
 
     public void start() {
         int result = 1;
         while (result != -1) {
-            printMajorDivideDesign();
-            printProcess();
-            result = selectProcess();
+            printDivideDesign();
+            printDivideDesign();
+            Utility.nextLine();
+            printOptions("Process List".toUpperCase(), processList);
+            result = selectProcess(processList);
             if (result != -1) {
+                Utility.nextLine();
+                printDivideDesign();
+                Utility.nextLine();
                 doSelectedProcess(result);
             }
             Utility.nextLine();
@@ -42,8 +55,6 @@ public class SearchBar {
     }
 
     private void doSelectedProcess(int selectedId) {
-        printMinorDivideDesign();
-
         switch (selectedId) {
             case 1:
                 printAllData();
@@ -52,13 +63,13 @@ public class SearchBar {
                 add();
                 break;
             case 3:
-                removeAll();
+                search();
                 break;
             case 4:
                 remove();
                 break;
             case 5:
-                search();
+                removeAll();
                 break;
             case 6:
                 settings();
@@ -69,29 +80,6 @@ public class SearchBar {
 
     }
 
-    private void settings() {
-        System.out.println("Updating Search Data printing Result. Please Select one of the following items number : ");
-
-        System.out.println("1-) Colorful Print (For any Java IDE)");
-        System.out.println("2-) Normal Print (For any Java IDE)");
-        System.out.println("2-) Normal Print (For any Java IDE)");
-      /*  try {
-            int selectedId= scanner.nextInt();
-           if (selectedId <= 0 || selectedId > processList.size()) {
-                throw new InvalidNumberException(selectedId);
-            }
-            return selectedId;
-        } catch (NumberFormatException e) {
-            printTodoInputError();
-            return selectProcess();
-        } catch (InvalidNumberException e) {
-            printTodoInputError(e.getMessage());
-            return selectProcess();
-        }
-*/
-
-
-    }
 
     private void printAllData() {
 
@@ -100,10 +88,9 @@ public class SearchBar {
         List<String> list = database.getList();
 
         if (list.size() == 0) {
-            extraText = "(Not found any data)";
+            extraText = " (Not found any data)";
         }
-        System.out.println("--> Print All Data :" + extraText);
-        System.out.println("_____________________");
+        printProcessTitle(processList.get(0) + extraText);
 
         for (int i = 0; i < list.size(); i++) {
             System.out.print("|   ");
@@ -116,22 +103,15 @@ public class SearchBar {
 
 
     private void add() {
+        printProcessTitle(processList.get(1));
         System.out.print("Type to add data : ");
         String data = getInputText();
         database.add(data);
     }
 
-    private void removeAll() {
-        database.removeAll();
-    }
-
-    private void remove() {
-        System.out.print("Type to remove data : ");
-        String data = getInputText();
-        database.remove(data);
-    }
-
     private void search() {
+        printProcessTitle(processList.get(2));
+        System.out.println("!!! NOTE : If you get meaningless text please go to Option 6 \"Update Print Settings\" and update printable Options");
         System.out.print("Type to search data : ");
         String data = getInputText();
         List<String> foundItems = searchItemFromList(data, database.getList());
@@ -139,21 +119,59 @@ public class SearchBar {
 
     }
 
-    private String getInputText() {
-        return scanner.nextLine();
+    private void remove() {
+        printProcessTitle(processList.get(3));
+        System.out.print("Type to remove data : ");
+
+        String data = getInputText();
+        database.remove(data);
+    }
+
+    private void removeAll() {
+        printProcessTitle(processList.get(4));
+        database.removeAll();
+    }
+
+    private void settings() {
+        printProcessTitle(processList.get(5));
+        printSettingOptions();
+        updateSettings();
+
+    }
+
+    private void printSettingOptions() {
+        System.out.println("Updating Search Data printing Result. Please Select one of the following items number : ");
+        printOptions("Setting Option List ".toUpperCase(), settingOptionList);
+
+    }
+
+    private void updateSettings() {
+        int result = selectProcess(settingOptionList);
+        PrintableConfiguration.updatePrintableService(result);
     }
 
 
-    private void printProcess() {
-        System.out.println("PROCESS LIST  :");
-        for (int i = 0; i < processList.size(); i++) {
-            System.out.println((i + 1) + "-) " + processList.get(i));
+    private String getInputText() {
+        String input = scanner.nextLine();
+        if (input.trim().isEmpty()) {
+            System.out.println("You cannot add empty text. Please type something");
+            return getInputText();
         }
+        return input;
+    }
+
+
+    private void printOptions(String title, List<String> optionList) {
+        System.out.println(title + "  :");
+        for (int i = 0; i < optionList.size(); i++) {
+            System.out.println((i + 1) + "-) " + optionList.get(i));
+        }
+        Utility.nextLine();
         System.out.print("Please type the number of process :");
     }
 
 
-    private int selectProcess() {
+    private int selectProcess(List<String> optionList) {
         try {
             String inputText = scanner.nextLine();
             int selectedId = -1;
@@ -163,29 +181,29 @@ public class SearchBar {
             } else {
                 selectedId = Integer.parseInt(inputText);
             }
-            if (selectedId <= 0 || selectedId > processList.size()) {
+            if (selectedId <= 0 || selectedId > optionList.size()) {
                 throw new InvalidNumberException(selectedId);
             }
             return selectedId;
         } catch (NumberFormatException e) {
-            printTodoInputError();
-            return selectProcess();
+            printTodoInputError(optionList.size());
+            return selectProcess(optionList);
         } catch (InvalidNumberException e) {
-            printTodoInputError(e.getMessage());
-            return selectProcess();
+            printTodoInputError(e.getMessage(), optionList.size());
+            return selectProcess(optionList);
         }
 
     }
 
-    private void printTodoInputError() {
-        printTodoInputError("");
+    private void printTodoInputError(int listSize) {
+        printTodoInputError("", listSize);
     }
 
-    private void printTodoInputError(String extraMsg) {
+    private void printTodoInputError(String extraMsg, int listSize) {
         if (!extraMsg.equalsIgnoreCase("")) {
             extraMsg += " .";
         }
-        System.out.println(extraMsg + "Please type a number between 1-" + processList.size());
+        System.out.println(extraMsg + "Please type a number between 1-" + listSize);
     }
 
 
@@ -215,11 +233,12 @@ public class SearchBar {
         return false;
     }
 
-    private void printMinorDivideDesign() {
-        System.out.println("++++++++++++++++++++++++++++++++++++++++++");
+    private void printDivideDesign() {
+        System.out.println("**************************************************");
     }
 
-    private void printMajorDivideDesign() {
-        System.out.println("**************************************************");
+    private void printProcessTitle(String title) {
+        System.out.println("=> " + title + ":");
+        System.out.println("------------------");
     }
 }

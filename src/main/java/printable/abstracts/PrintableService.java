@@ -2,8 +2,12 @@ package printable.abstracts;
 
 public interface PrintableService {
 
-//    String start();
-//    String reset();
+
+    default void intialize() {
+    }
+
+    default void destroy() {
+    }
 
     String getColorfulText(String msg);
 }

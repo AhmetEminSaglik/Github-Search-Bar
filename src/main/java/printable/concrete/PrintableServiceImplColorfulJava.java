@@ -7,6 +7,6 @@ public class PrintableServiceImplColorfulJava implements PrintableService {
 
     @Override
     public String getColorfulText(String msg) {
-        return ConsoleColors.GREEN_BOLD_BRIGHT + msg ;
+        return ConsoleColors.GREEN_BOLD_BRIGHT + msg + ConsoleColors.WHITE;
     }
 }

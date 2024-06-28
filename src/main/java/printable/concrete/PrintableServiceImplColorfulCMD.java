@@ -7,35 +7,21 @@ import static org.fusesource.jansi.Ansi.Color.GREEN;
 import static org.fusesource.jansi.Ansi.ansi;
 
 public class PrintableServiceImplColorfulCMD implements PrintableService {
-    private void install() {
-        if (!AnsiConsole.isInstalled()) {
-            AnsiConsole.systemInstall();
-        }
+    public PrintableServiceImplColorfulCMD() {
     }
-
-    private void uninstall() {
-        if (AnsiConsole.isInstalled()) {
-            AnsiConsole.systemUninstall();
-        }
-    }
-/*
 
     @Override
-    public String start() {
-        install();
-        return "";
+    public void intialize() {
+        AnsiConsole.systemInstall();
     }
-
 
     @Override
-    public String reset() {
-        uninstall();
-        return "";
+    public void destroy() {
+        AnsiConsole.systemUninstall();
     }
-*/
 
     @Override
     public String getColorfulText(String msg) {
-        return ansi().fg(GREEN).a("").reset() + "";
+        return ansi().fg(GREEN).a(msg).reset() + "";
     }
 }

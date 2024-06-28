@@ -24,6 +24,9 @@ public class Database {
         list.add("Flutter Developer");
         list.add("I scream, you scream, we all scream for ice cream");
         list.add("3.141592653589793");
+        list.add("Clean Code");
+        list.add("Head First Java");
+        list.add("Design Patterns");
     }
 
     public void add(String word) {
