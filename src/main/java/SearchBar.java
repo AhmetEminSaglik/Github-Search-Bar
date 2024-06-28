@@ -111,7 +111,8 @@ public class SearchBar {
 
     private void search() {
         printProcessTitle(processList.get(2));
-        System.out.println("!!! NOTE : If you get meaningless text please go to Option 6 \"Update Print Settings\" and update printable Options");
+        System.out.println("!!! NOTE : If you get meaningless text please go to Option 6 (\"Update Print Settings\")" +
+                "\nand update printable Options for your working environment.");
         System.out.print("Type to search data : ");
         String data = getInputText();
         List<String> foundItems = searchItemFromList(data, database.getList());
