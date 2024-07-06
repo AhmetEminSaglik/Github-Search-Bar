@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: GithubSearchBar proejct CI/CD flow Test
+name: GithubSearchBar project CI/CD flow Test
 
 on:
   push:
